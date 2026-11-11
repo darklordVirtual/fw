@@ -1,0 +1,9 @@
+# attackers-v4 - IPv4 addresses and CIDRs for firewall blocking
+# One entry per line. '#' starts a comment. Blank lines are ignored.
+# See README.md for the rules a consumer must apply before using this file.
+
+92.119.89.19
+151.242.30.224
+162.248.101.153
+176.65.148.183
+185.228.26.16
