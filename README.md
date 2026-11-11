@@ -21,11 +21,18 @@ Anything that does not match those rules is malformed and should be discarded by
 
 ## Consuming a list
 
-Fetch over HTTPS from the raw endpoint:
+Two endpoints serve the same file:
 
 ```
+# CDN-cached, no rate limit
 https://raw.githubusercontent.com/darklordvirtual/fw/main/blocklist/attackers-v4.txt
+
+# uncached, 60 requests/hour per source address without authentication
+https://api.github.com/repos/darklordvirtual/fw/contents/blocklist/attackers-v4.txt
+   with header:  Accept: application/vnd.github.raw
 ```
+
+**Prefer the API endpoint if removals need to take effect promptly.** Measured 2026-11-11: an *addition* reached the raw endpoint in about 10 seconds, while a *removal* was still being served from CDN cache more than four minutes after the commit. A cache-busting query string does not help — the CDN does not vary on query. Removal is the direction that carries urgency, because that is how a false positive gets withdrawn.
 
 **Do not apply the file verbatim.** A consumer is expected to:
 
